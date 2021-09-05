@@ -1,37 +1,25 @@
 import React, { useState } from "react";
 import { Icon, Input } from "semantic-ui-react";
-import { githubV4Api } from "../utils/api";
+import { Link } from "react-router-dom";
 
-export default function UserInput(props) {
-  const { setData } = props;
+export default function UserInput() {
   const [userInput, setUserInput] = useState("");
-
-  const submitData = (input) => {
-    if (input.length > 0)
-      githubV4Api(input).then((data) => {
-        setData(data.data.data.user.repositories.nodes);
-      });
-  };
 
   return (
     <div className="App--input">
       <Input
-        placeholder="Username"
+        placeholder="Username..."
         onKeyPress={(e) => {
-          if (e.key === "Enter") submitData(userInput);
+          if (e.key === "Enter") window.location.href = `/${userInput}`;
         }}
         onChange={(e) => {
           setUserInput(e.target.value);
         }}
       />
-      <Icon
-        name="search"
-        size="big"
-        maxLength="39"
-        onClick={() => {
-          submitData(userInput);
-        }}
-      />
+
+      <Link to={`/${userInput}`}>
+        <Icon name="search" size="big" />
+      </Link>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import {} from "semantic-ui-react";
 
 export default function RepoCard(props) {
   const { info } = props;
@@ -12,7 +11,7 @@ export default function RepoCard(props) {
       rel="noreferrer"
     >
       <p>{info.name}</p>
-      <p>{info.primaryLanguage.name}</p>
+      <p>{info?.primaryLanguage?.name}</p>
     </a>
   );
 }

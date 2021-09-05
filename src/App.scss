@@ -3,13 +3,28 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 1rem;
 
   i:first-child {
-    margin-top: 1rem;
+    padding-left: 0.5rem;
+    color: black;
   }
 
   &--input {
     margin: 1rem;
+
+    i {
+      font-size: 2.5rem !important;
+    }
+
+    input {
+      width: 15rem;
+      height: 3.5rem;
+
+      &::placeholder {
+        font-size: 1.25rem;
+      }
+    }
 
     i:hover {
       cursor: pointer;
@@ -17,6 +32,11 @@
   }
 
   &--list {
+    .ui.huge.header {
+      margin-top: 2rem;
+      color: red !important;
+    }
+
     &__card {
       border: 2px solid black;
       border-radius: 1rem;
