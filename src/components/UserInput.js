@@ -19,6 +19,7 @@ export default function UserInput() {
 
       <Link to={`/${userInput}`}>
         <Icon name="search" size="big" />
+        <p>Search</p>
       </Link>
     </div>
   );

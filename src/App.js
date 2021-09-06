@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <Icon name="github" size="massive" />
-      <h1>Hello world</h1>
+      <h1>Search for a user</h1>
 
       <Router>
         <UserInput />

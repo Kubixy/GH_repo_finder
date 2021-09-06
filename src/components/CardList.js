@@ -18,13 +18,15 @@ export default function CardList() {
       .catch(() => {
         setErrorState(true);
       });
-  });
+  }, []);
 
   return (
     <div>
       <div className="App--list">
         {errorState ? (
-          <Header size="huge">User not found</Header>
+          <Header color="red" size="huge">
+            User not found
+          </Header>
         ) : (
           data.map((x, index) => {
             return <RepoCard key={index} info={x} />;
