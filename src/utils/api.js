@@ -19,6 +19,14 @@ export const githubV4Api = (userInput) => {
                         primaryLanguage {
                           name
                         }
+
+                        object(expression:"master") {
+                          ... on Commit {
+                            history {
+                              totalCount
+                            }
+                          }
+                        }
                       }
                     }
                   }

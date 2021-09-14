@@ -2,7 +2,7 @@ import "./App.scss";
 import { Icon } from "semantic-ui-react";
 import React from "react";
 import UserInput from "./components/UserInput";
-import CardList from "./components/CardList";
+import CardTable from "./components/CardTable";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       <Router>
         <UserInput />
         <Switch>
-          <Route path="/:user" component={() => <CardList />} />
+          <Route path="/:user" component={() => <CardTable />} />
         </Switch>
       </Router>
     </div>

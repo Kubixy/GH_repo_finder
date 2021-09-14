@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Icon, Input } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 
 export default function UserInput() {
   const [userInput, setUserInput] = useState("");
@@ -17,10 +16,15 @@ export default function UserInput() {
         }}
       />
 
-      <Link to={`/${userInput}`}>
+      <div
+        className="App--input__search"
+        onClick={() => {
+          window.location.href = `/${userInput}`;
+        }}
+      >
         <Icon name="search" size="big" />
         <p>Search</p>
-      </Link>
+      </div>
     </div>
   );
 }
