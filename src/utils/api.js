@@ -12,7 +12,10 @@ export const githubV4Api = (userInput) => {
       query: `
                 {
                   user(login: "${userInput}") {
+                    avatarUrl
+                    
                     repositories(first: 100) {
+
                       nodes {
                         name
                         url
@@ -27,8 +30,11 @@ export const githubV4Api = (userInput) => {
                             }
                           }
                         }
+
                       }
+                      
                     }
+
                   }
                 }
               `,
