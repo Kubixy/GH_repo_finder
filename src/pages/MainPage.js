@@ -1,7 +1,7 @@
 import { Icon } from "semantic-ui-react";
 import UserInput from "../components/UserInput/UserInput";
 
-export default function Main() {
+export default function MainPage() {
   return (
     <>
       <Icon name="github" size="massive" />
