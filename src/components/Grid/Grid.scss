@@ -1,0 +1,28 @@
+.App--grid {
+  table {
+    font-size: 1.1rem !important;
+    margin-bottom: 1rem !important;
+
+    tr {
+      &:hover {
+        cursor: pointer;
+        background-color: #f0f0f0;
+      }
+    }
+  }
+
+  .ui.huge.header {
+    margin-top: 2rem;
+  }
+
+  & a {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    p {
+      color: black;
+      margin: 0 !important;
+    }
+  }
+}

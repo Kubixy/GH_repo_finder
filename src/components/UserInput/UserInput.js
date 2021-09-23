@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Icon, Input } from "semantic-ui-react";
 
+import "./UserInput.scss";
+
 export default function UserInput() {
   const [userInput, setUserInput] = useState("");
 

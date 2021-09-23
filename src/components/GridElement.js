@@ -1,6 +1,6 @@
 import { Table } from "semantic-ui-react";
 
-export default function RepoCard(props) {
+export default function GridElement(props) {
   const { info, index } = props;
 
   return (

@@ -1,5 +1,5 @@
 import { Icon } from "semantic-ui-react";
-import UserInput from "../components/UserInput";
+import UserInput from "../components/UserInput/UserInput";
 
 export default function Main() {
   return (

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Header, Image } from "semantic-ui-react";
 import { githubV4Api } from "../utils/api";
-import UserInput from "../components/UserInput";
-import CardTable from "../components/CardTable";
+import UserInput from "../components/UserInput/UserInput";
+import Grid from "../components/Grid/Grid";
 
 export default function UserPage() {
   const [userData, setUserData] = useState([]);
@@ -34,7 +34,7 @@ export default function UserPage() {
         <>
           <Image src={userData?.avatarUrl} size="small" avatar />
           <h1>{loc.pathname.substring(1)}</h1>
-          <CardTable data={userData?.repositories?.nodes} />
+          <Grid data={userData?.repositories?.nodes} />
         </>
       )}
     </>

@@ -1,12 +1,14 @@
 import { Table } from "semantic-ui-react";
-import RepoCard from "./RepoCard";
+import GridElement from "../GridElement";
+
+import "./Grid.scss";
 
 export default function CardTable(props) {
   const { data } = props;
 
   return (
     <div>
-      <div className="App--list">
+      <div className="App--grid">
         <Table celled textAlign="center">
           <Table.Header>
             <Table.Row>
@@ -17,7 +19,7 @@ export default function CardTable(props) {
           </Table.Header>
           <Table.Body>
             {data?.map((x, index) => {
-              return <RepoCard key={index} info={x} />;
+              return <GridElement key={index} info={x} />;
             })}
           </Table.Body>
         </Table>
