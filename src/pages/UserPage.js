@@ -48,7 +48,7 @@ export default function UserPage() {
       ) : (
         <>
           <Image src={userData?.avatarUrl} size="small" avatar />
-          <h1>{loc.pathname.substring(1)}</h1>
+          <Header size="huge">{loc.pathname.substring(1)}</Header>
           <Grid data={userData?.repositories?.nodes} />
         </>
       )}

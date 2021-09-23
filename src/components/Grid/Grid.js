@@ -14,6 +14,7 @@ export default function CardTable(props) {
             <Table.Row>
               <Table.HeaderCell>Repository</Table.HeaderCell>
               <Table.HeaderCell>Language</Table.HeaderCell>
+              <Table.HeaderCell>Last commit</Table.HeaderCell>
               <Table.HeaderCell>Commits</Table.HeaderCell>
             </Table.Row>
           </Table.Header>

@@ -25,8 +25,12 @@ export const githubV4Api = (userInput) => {
 
                         object(expression:"master") {
                           ... on Commit {
-                            history {
+                            
+                            history(first: 1) {
                               totalCount
+                              nodes {
+                                committedDate
+                              }
                             }
                           }
                         }
