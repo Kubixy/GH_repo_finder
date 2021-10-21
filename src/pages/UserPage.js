@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Header, Image, Loader, Dimmer } from "semantic-ui-react";
-import { Icon } from "semantic-ui-react";
+import { Header, Image, Loader, Dimmer, Icon } from "semantic-ui-react";
 import { githubV4Api } from "../utils/api";
 import UserInput from "../components/UserInput/UserInput";
 import Grid from "../components/Grid/Grid";
@@ -11,18 +10,42 @@ export default function UserPage() {
   const [userData, setUserData] = useState([]);
   const [errorState, setErrorState] = useState(false);
   const [loadingState, setLoadingState] = useState(true);
+  const [userAvatar, setUserAvatar] = useState(null);
   const loc = useLocation();
 
   useEffect(() => {
     if (validateUsername(loc.pathname.substring(1))) {
       githubV4Api(loc.pathname.substring(1))
         .then((data) => {
-          setUserData(data.data.data.user);
-          setErrorState(data.data.errors);
-          setLoadingState(false);
+          setUserAvatar(data.data.data.user?.avatarUrl);
+          let newData = [];
+
+          for (
+            let i = 0;
+            i < data.data.data.user?.repositories?.nodes.length;
+            i++
+          ) {
+            newData.push({
+              name: data.data.data.user?.repositories?.nodes[i].name,
+              primaryLanguage:
+                data.data.data.user?.repositories?.nodes[i]?.primaryLanguage
+                  ?.name,
+              committedDate: data.data.data.user?.repositories?.nodes[
+                i
+              ]?.object?.history?.nodes[0]?.committedDate?.substring(0, 10),
+              totalCount:
+                data.data.data.user?.repositories?.nodes[i]?.object?.history
+                  ?.totalCount,
+              url: data.data.data.user?.repositories?.nodes[i].url,
+            });
+          }
+
+          setUserData(newData);
         })
         .catch(() => {
           setErrorState(true);
+        })
+        .finally(() => {
           setLoadingState(false);
         });
     } else {
@@ -47,9 +70,9 @@ export default function UserPage() {
         </>
       ) : (
         <>
-          <Image src={userData?.avatarUrl} size="small" avatar />
+          <Image src={userAvatar} size="small" avatar />
           <Header size="huge">{loc.pathname.substring(1)}</Header>
-          <Grid data={userData?.repositories?.nodes} />
+          <Grid userData={userData} setUserData={setUserData} />
         </>
       )}
     </>
