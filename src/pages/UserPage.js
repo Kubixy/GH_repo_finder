@@ -16,27 +16,29 @@ export default function UserPage() {
   useEffect(() => {
     if (validateUsername(loc.pathname.substring(1))) {
       githubV4Api(loc.pathname.substring(1))
-        .then((data) => {
-          setUserAvatar(data.data.data.user?.avatarUrl);
+        .then((input) => {
+          setUserAvatar(input.data.data.user?.avatarUrl);
+          let data = input.data.data.user?.repositories?.nodes;
           let newData = [];
 
-          for (
-            let i = 0;
-            i < data.data.data.user?.repositories?.nodes.length;
-            i++
-          ) {
+          for (let i = 0; i < data.length; i++) {
             newData.push({
-              name: data.data.data.user?.repositories?.nodes[i].name,
-              primaryLanguage:
-                data.data.data.user?.repositories?.nodes[i]?.primaryLanguage
-                  ?.name,
-              committedDate: data.data.data.user?.repositories?.nodes[
+              name: data[i].name,
+              primaryLanguage: data[i]?.primaryLanguage?.name
+                ? data[i]?.primaryLanguage?.name
+                : "",
+              committedDate: data[
                 i
-              ]?.object?.history?.nodes[0]?.committedDate?.substring(0, 10),
-              totalCount:
-                data.data.data.user?.repositories?.nodes[i]?.object?.history
-                  ?.totalCount,
-              url: data.data.data.user?.repositories?.nodes[i].url,
+              ]?.object?.history?.nodes[0]?.committedDate?.substring(0, 10)
+                ? data[i]?.object?.history?.nodes[0]?.committedDate?.substring(
+                    0,
+                    10
+                  )
+                : "",
+              totalCount: data[i]?.object?.history?.totalCount
+                ? data[i]?.object?.history?.totalCount
+                : "",
+              url: data[i].url,
             });
           }
 
