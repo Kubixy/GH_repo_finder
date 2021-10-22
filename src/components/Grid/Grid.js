@@ -1,20 +1,27 @@
 import { Table } from "semantic-ui-react";
 import GridElement from "../GridElement";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 import "./Grid.scss";
 
 export default function CardTable(props) {
-  const { userData, setUserData } = props;
-  const [state, setstate] = useState({ property: null, dir: 1 });
+  const { userData } = props;
+  const [sortState, setSortState] = useState({ property: null, dir: 1 });
+  const [data, setData] = useState([]);
 
   useMemo(() => {
-    setUserData(
-      userData.sort((a, b) =>
-        a[state.property] > b[state.property] ? 1 * state.dir : -1 * state.dir
+    setData(
+      data.sort((a, b) =>
+        a[sortState.property] > b[sortState.property]
+          ? 1 * sortState.dir
+          : -1 * sortState.dir
       )
     );
-  }, [state]);
+  }, [sortState, data]);
+
+  useEffect(() => {
+    setData(userData);
+  }, [userData]);
 
   return (
     <div>
@@ -24,16 +31,16 @@ export default function CardTable(props) {
             <Table.Row>
               <Table.HeaderCell
                 onClick={() => {
-                  setstate({ property: "name", dir: state.dir * -1 });
+                  setSortState({ property: "name", dir: sortState.dir * -1 });
                 }}
               >
                 Repository
               </Table.HeaderCell>
               <Table.HeaderCell
                 onClick={() => {
-                  setstate({
+                  setSortState({
                     property: "primaryLanguage",
-                    dir: state.dir * -1,
+                    dir: sortState.dir * -1,
                   });
                 }}
               >
@@ -41,9 +48,9 @@ export default function CardTable(props) {
               </Table.HeaderCell>
               <Table.HeaderCell
                 onClick={() => {
-                  setstate({
+                  setSortState({
                     property: "committedDate",
-                    dir: state.dir * -1,
+                    dir: sortState.dir * -1,
                   });
                 }}
               >
@@ -51,9 +58,9 @@ export default function CardTable(props) {
               </Table.HeaderCell>
               <Table.HeaderCell
                 onClick={() => {
-                  setstate({
+                  setSortState({
                     property: "totalCount",
-                    dir: state.dir * -1,
+                    dir: sortState.dir * -1,
                   });
                 }}
               >
@@ -62,7 +69,7 @@ export default function CardTable(props) {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {userData?.map((x, index) => {
+            {data?.map((x, index) => {
               return <GridElement key={index} info={x} />;
             })}
           </Table.Body>

@@ -74,7 +74,7 @@ export default function UserPage() {
         <>
           <Image src={userAvatar} size="small" avatar />
           <Header size="huge">{loc.pathname.substring(1)}</Header>
-          <Grid userData={userData} setUserData={setUserData} />
+          <Grid userData={userData} />
         </>
       )}
     </>
