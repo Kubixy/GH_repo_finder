@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Header, Image, Loader, Dimmer, Icon } from "semantic-ui-react";
+import { Header, Image, Loader, Dimmer, Icon, Label } from "semantic-ui-react";
 import { githubV4Api } from "../utils/api";
 import UserInput from "../components/UserInput/UserInput";
 import Grid from "../components/Grid/Grid";
@@ -72,7 +72,12 @@ export default function UserPage() {
         </>
       ) : (
         <>
-          <Image src={userAvatar} size="small" avatar />
+          {userAvatar ? (
+            <Image src={userAvatar} size="small" avatar />
+          ) : (
+            <Label content="Image not found!" icon="warning" />
+          )}
+
           <Header size="huge">{loc.pathname.substring(1)}</Header>
           <Grid userData={userData} />
         </>
