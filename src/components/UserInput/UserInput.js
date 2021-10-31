@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Icon, Input } from "semantic-ui-react";
+import { Input } from "semantic-ui-react";
 
 import "./UserInput.scss";
 
@@ -24,7 +24,6 @@ export default function UserInput() {
           window.location.href = `/${userInput}`;
         }}
       >
-        <Icon name="search" size="big" />
         <p>Search</p>
       </div>
     </div>

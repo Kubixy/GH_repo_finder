@@ -17,7 +17,6 @@ export default function UserProfile(props) {
         )}
         <h1>{userName}</h1>
       </div>
-      <UserInput />
       <div className="UserProfile--details">
         <Icon name="archive" />
         <span>10</span>
@@ -26,6 +25,7 @@ export default function UserProfile(props) {
         <Icon name="users" />
         <span>3</span>
       </div>
+      <UserInput />
     </div>
   );
 }

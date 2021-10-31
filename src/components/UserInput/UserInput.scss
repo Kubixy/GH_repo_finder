@@ -1,6 +1,7 @@
 .App--input {
   margin: 2rem;
   display: flex;
+  align-items: center;
 
   &__search {
     display: flex;
@@ -9,11 +10,14 @@
 
     p {
       color: black;
-    }
-  }
+      border: solid 1px black;
+      padding: 0.25rem;
+      border-radius: 0.5rem;
 
-  i {
-    font-size: 2.5rem !important;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   input {
