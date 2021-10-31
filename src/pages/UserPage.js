@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Header, Image, Loader, Dimmer, Icon } from "semantic-ui-react";
+import { Header, Loader, Dimmer, Icon } from "semantic-ui-react";
 import { githubV4Api } from "../utils/api";
 import UserInput from "../components/UserInput/UserInput";
 import Grid from "../components/Grid/Grid";
 import { validateUsername } from "../utils/Validation";
+import UserProfile from "../components/UserProfile/UserProfile";
 
 export default function UserPage() {
   const [userData, setUserData] = useState([]);
@@ -58,7 +59,7 @@ export default function UserPage() {
 
   return (
     <>
-      <Dimmer active={loadingState} inverted>
+      <Dimmer active={loadingState}>
         <Loader inline>Loading</Loader>
       </Dimmer>
 
@@ -72,8 +73,10 @@ export default function UserPage() {
         </>
       ) : (
         <>
-          <Image src={userAvatar} size="small" avatar />
-          <Header size="huge">{loc.pathname.substring(1)}</Header>
+          <UserProfile
+            userAvatar={userAvatar}
+            userName={loc.pathname.substring(1)}
+          />
           <Grid userData={userData} />
         </>
       )}

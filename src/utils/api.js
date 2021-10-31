@@ -45,3 +45,13 @@ export const githubV4Api = (userInput) => {
     }),
   });
 };
+
+// followers {
+//   totalCount
+// }
+// starredRepositories {
+//   totalCount
+// }
+// repositories {
+//   totalCount
+// }
