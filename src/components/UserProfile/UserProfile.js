@@ -9,9 +9,12 @@ export default function UserProfile(props) {
 
   return (
     <div className="UserProfile">
-      <div className="UserProfile--avatarName">
+      <div
+        className="UserProfile--avatarName"
+        onClick={() => window.open("https://github.com/" + userName)}
+      >
         {userAvatar ? (
-          <Image src={userAvatar} avatar />
+          <Image src={userAvatar} avatar alt="avatar" />
         ) : (
           <Label content="Image not found!" icon="warning" />
         )}
