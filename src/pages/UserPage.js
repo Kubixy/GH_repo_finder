@@ -14,6 +14,8 @@ export default function UserPage() {
   const [userAvatar, setUserAvatar] = useState(null);
   const loc = useLocation();
 
+  // REFACTOR
+
   useEffect(() => {
     if (validateUsername(loc.pathname.substring(1))) {
       githubV4Api(loc.pathname.substring(1))

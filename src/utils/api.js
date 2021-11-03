@@ -17,6 +17,7 @@ export const githubV4Api = async (userInput) => {
                     avatarUrl
                     
                     repositories(first: 100) {
+                      totalCount
 
                       nodes {
                         name
@@ -71,12 +72,24 @@ export const githubV4Api = async (userInput) => {
   return output;
 };
 
-// followers {
-//   totalCount
-// }
-// starredRepositories {
-//   totalCount
-// }
 // repositories {
 //   totalCount
+// }
+
+// followers(first: 100) {
+//   edges {
+//     node {
+//       login
+//     }
+//   }
+// }
+
+// starredRepositories {
+//   totalCount
+//   nodes {
+//     name
+//     url
+//     forkCount
+//     stargazerCount
+//   }
 // }

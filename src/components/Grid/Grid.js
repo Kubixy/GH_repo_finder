@@ -1,12 +1,14 @@
 import { Table } from "semantic-ui-react";
 import GridElement from "../GridElement";
 import { useMemo, useState, useEffect } from "react";
+import { pretifyRowName } from "../../utils/StringManipulation";
 
 import "./Grid.scss";
 
 export default function CardTable(props) {
   const { userData } = props;
   const [sortState, setSortState] = useState({ property: null, dir: 1 });
+  const [rowNames, setRowNames] = useState([]);
   const [data, setData] = useState([]);
 
   useMemo(() => {
@@ -21,6 +23,14 @@ export default function CardTable(props) {
 
   useEffect(() => {
     setData(userData);
+    if (userData[0]) {
+      let a = Object.keys(userData[0]);
+      a.splice(
+        a.findIndex((e) => e?.url),
+        1
+      );
+      setRowNames(a);
+    }
   }, [userData]);
 
   return (
@@ -29,48 +39,26 @@ export default function CardTable(props) {
         <Table celled textAlign="center" sortable>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell
-                onClick={() => {
-                  setSortState({ property: "name", dir: sortState.dir * -1 });
-                }}
-              >
-                Repository
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                onClick={() => {
-                  setSortState({
-                    property: "primaryLanguage",
-                    dir: sortState.dir * -1,
-                  });
-                }}
-              >
-                Language
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                onClick={() => {
-                  setSortState({
-                    property: "committedDate",
-                    dir: sortState.dir * -1,
-                  });
-                }}
-              >
-                Last commit
-              </Table.HeaderCell>
-              <Table.HeaderCell
-                onClick={() => {
-                  setSortState({
-                    property: "totalCount",
-                    dir: sortState.dir * -1,
-                  });
-                }}
-              >
-                Commits
-              </Table.HeaderCell>
+              {rowNames.map((value, index) => {
+                return (
+                  <Table.HeaderCell
+                    key={index}
+                    onClick={() => {
+                      setSortState({
+                        property: value,
+                        dir: sortState.dir * -1,
+                      });
+                    }}
+                  >
+                    {pretifyRowName(value)}
+                  </Table.HeaderCell>
+                );
+              })}
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {data?.map((x, index) => {
-              return <GridElement key={index} info={x} />;
+            {data?.map((value, index) => {
+              return <GridElement key={index} info={value} />;
             })}
           </Table.Body>
         </Table>
