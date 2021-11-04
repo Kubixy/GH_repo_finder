@@ -1,8 +1,33 @@
 import axios from "axios";
 import authorization from "./auth.js";
 
-export const getUserData = async (userInput) => {
-  let output = { userAvatar: null, userData: [] };
+export const getUserAvatar = async (userInput) => {
+  let output = null;
+
+  await axios({
+    url: "https://api.github.com/graphql",
+    method: "POST",
+    headers: {
+      Authorization: `bearer ${authorization}`,
+    },
+    data: JSON.stringify({
+      query: `
+              {
+                user(login: "${userInput}") {
+                  avatarUrl
+                }
+              }
+              `,
+    }),
+  }).then((input) => {
+    output = input.data.data.user?.avatarUrl;
+  });
+
+  return output;
+};
+
+export const getUserRepositories = async (userInput) => {
+  let output = [];
 
   await axios({
     url: "https://api.github.com/graphql",
@@ -14,13 +39,12 @@ export const getUserData = async (userInput) => {
       query: `
                 {
                   user(login: "${userInput}") {
-                    avatarUrl
-                    
                     repositories(first: 100) {
                       totalCount
 
                       nodes {
                         name
+                        url
                         primaryLanguage {
                           name
                         }
@@ -46,23 +70,23 @@ export const getUserData = async (userInput) => {
               `,
     }),
   }).then((input) => {
-    output.userAvatar = input.data.data.user?.avatarUrl;
     let data = input.data.data.user?.repositories?.nodes;
 
     for (let i = 0; i < data.length; i++) {
-      output.userData.push({
-        name: data[i].name,
-        primaryLanguage: data[i]?.primaryLanguage?.name
+      output.push({
+        Name: data[i].name,
+        Language: data[i]?.primaryLanguage?.name
           ? data[i]?.primaryLanguage?.name
           : "",
-        committedDate: data[
+        "Last Commit": data[
           i
         ]?.object?.history?.nodes[0]?.committedDate?.substring(0, 10)
           ? data[i]?.object?.history?.nodes[0]?.committedDate?.substring(0, 10)
           : "",
-        totalCount: data[i]?.object?.history?.totalCount
+        Commits: data[i]?.object?.history?.totalCount
           ? data[i]?.object?.history?.totalCount
           : "",
+        url: data[i].url,
       });
     }
   });
@@ -107,44 +131,96 @@ export const getUserStats = async (userInput) => {
   return output;
 };
 
-// repositories {
-//   totalCount
-// }
+// function to get the user's followers
+export const getUserFollowers = async (userInput) => {
+  let output = [];
 
-// followers(first: 100) {
-//   edges {
-//     node {
-//       login
-//     }
-//   }
-// }
+  await axios({
+    url: "https://api.github.com/graphql",
+    method: "POST",
+    headers: {
+      Authorization: `bearer ${authorization}`,
+    },
+    data: JSON.stringify({
+      query: `
+              {
+                user(login: "${userInput}") {
+                  followers(first: 10) {
+                    edges {
+                      node {
+                        login
+                        url
+                        repositories {
+                          totalCount
+                        }
+                        followers {
+                          totalCount
+                        }
+                        starredRepositories {
+                          totalCount
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              `,
+    }),
+  }).then((input) => {
+    let data = input.data.data.user?.followers?.edges;
 
-// starredRepositories {
-//   totalCount
-//   nodes {
-//     name
-//     url
-//     forkCount
-//     stargazerCount
-//   }
-// }
+    for (let i = 0; i < data.length; i++) {
+      output.push({
+        User: data[i].node.login,
+        Repos: data[i].node.repositories.totalCount,
+        Follows: data[i].node.followers.totalCount,
+        Starred: data[i].node.starredRepositories.totalCount,
+        url: data[i].node.url,
+      });
+    }
+  });
 
-// user(login: "${userInput}") {
-//   followers(first: 10) {
-//     edges {
-//       node {
-//         login
-//         avatarUrl
-//         repositories {
-//           totalCount
-//         }
-//         followers {
-//           totalCount
-//         }
-//         starredRepositories {
-//           totalCount
-//         }
-//       }
-//     }
-//   }
-// }
+  return output;
+};
+
+export const getUserStarredRepos = async (userInput) => {
+  let output = [];
+
+  await axios({
+    url: "https://api.github.com/graphql",
+    method: "POST",
+    headers: {
+      Authorization: `bearer ${authorization}`,
+    },
+    data: JSON.stringify({
+      query: `
+              {
+                user(login: "${userInput}") {
+                  starredRepositories (first: 10) {
+                    totalCount
+                    nodes {
+                      name
+                      url
+                      forkCount
+                      stargazerCount
+                    }
+                  }
+                }
+              }
+              `,
+    }),
+  }).then((input) => {
+    let data = input.data.data.user?.starredRepositories?.nodes;
+
+    for (let i = 0; i < data.length; i++) {
+      output.push({
+        Repository: data[i].name,
+        Forks: data[i].forkCount,
+        Stars: data[i].stargazerCount,
+        url: data[i].url,
+      });
+    }
+  });
+
+  return output;
+};

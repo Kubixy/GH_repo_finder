@@ -8,7 +8,21 @@ function App() {
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/:user" component={() => <UserPage />} />
+          <Route
+            exact
+            path="/followers/:user"
+            component={() => <UserPage location={"followers"} />}
+          />
+          <Route
+            exact
+            path="/stars/:user"
+            component={() => <UserPage location={"stars"} />}
+          />
+          <Route
+            exact
+            path="/repositories/:user"
+            component={() => <UserPage location={"repositories"} />}
+          />
           <Route path="/" component={() => <MainPage />} />
         </Switch>
       </Router>

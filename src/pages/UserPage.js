@@ -1,37 +1,76 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Header, Loader, Dimmer, Icon } from "semantic-ui-react";
-import { getUserData } from "../utils/api";
+import {
+  getUserRepositories,
+  getUserAvatar,
+  getUserFollowers,
+  getUserStarredRepos,
+} from "../utils/api";
 import UserInput from "../components/UserInput/UserInput";
 import Grid from "../components/Grid/Grid";
 import { validateUsername } from "../utils/Validation";
 import UserProfile from "../components/UserProfile/UserProfile";
 
-export default function UserPage() {
+export default function UserPage(props) {
+  const { location } = props;
   const [userData, setUserData] = useState([]);
   const [errorState, setErrorState] = useState(false);
   const [loadingState, setLoadingState] = useState(true);
   const [userAvatar, setUserAvatar] = useState(null);
   const loc = useLocation();
+  const userName = loc.pathname.substring(loc.pathname.lastIndexOf("/") + 1);
 
   useEffect(() => {
-    if (validateUsername(loc.pathname.substring(1))) {
-      getUserData(loc.pathname.substring(1))
-        .then((input) => {
-          setUserAvatar(input.userAvatar);
-          setUserData(input.userData);
-        })
-        .catch(() => {
+    if (validateUsername(userName)) {
+      getUserAvatar(userName).then((input) => setUserAvatar(input));
+
+      switch (location) {
+        case "repositories":
+          getUserRepositories(userName)
+            .then((input) => {
+              setUserData(input);
+            })
+            .catch(() => {
+              setErrorState(true);
+            })
+            .finally(() => {
+              setLoadingState(false);
+            });
+          break;
+        case "followers":
+          getUserFollowers(userName)
+            .then((input) => {
+              setUserData(input);
+            })
+            .catch(() => {
+              setErrorState(true);
+            })
+            .finally(() => {
+              setLoadingState(false);
+            });
+          break;
+        case "stars":
+          getUserStarredRepos(userName)
+            .then((input) => {
+              setUserData(input);
+            })
+            .catch(() => {
+              setErrorState(true);
+            })
+            .finally(() => {
+              setLoadingState(false);
+            });
+          break;
+        default:
           setErrorState(true);
-        })
-        .finally(() => {
           setLoadingState(false);
-        });
+      }
     } else {
       setErrorState(true);
       setLoadingState(false);
     }
-  }, [loc.pathname]);
+  }, [location, userName]);
 
   return (
     <>
@@ -49,11 +88,8 @@ export default function UserPage() {
         </>
       ) : (
         <>
-          <UserProfile
-            userAvatar={userAvatar}
-            userName={loc.pathname.substring(1)}
-          />
-          <Grid userData={userData} userName={loc.pathname.substring(1)} />
+          <UserProfile userAvatar={userAvatar} userName={userName} />
+          <Grid userData={userData} location={location} />
         </>
       )}
     </>
