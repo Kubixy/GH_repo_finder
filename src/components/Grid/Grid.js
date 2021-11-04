@@ -6,7 +6,7 @@ import { pretifyRowName } from "../../utils/StringManipulation";
 import "./Grid.scss";
 
 export default function CardTable(props) {
-  const { userData } = props;
+  const { userData, userName } = props;
   const [sortState, setSortState] = useState({ property: null, dir: 1 });
   const [rowNames, setRowNames] = useState([]);
   const [data, setData] = useState([]);
@@ -24,12 +24,7 @@ export default function CardTable(props) {
   useEffect(() => {
     setData(userData);
     if (userData[0]) {
-      let a = Object.keys(userData[0]);
-      a.splice(
-        a.findIndex((e) => e?.url),
-        1
-      );
-      setRowNames(a);
+      setRowNames(Object.keys(userData[0]));
     }
   }, [userData]);
 
@@ -58,7 +53,9 @@ export default function CardTable(props) {
           </Table.Header>
           <Table.Body>
             {data?.map((value, index) => {
-              return <GridElement key={index} info={value} />;
+              return (
+                <GridElement key={index} info={value} userName={userName} />
+              );
             })}
           </Table.Body>
         </Table>

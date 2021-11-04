@@ -21,7 +21,6 @@ export const getUserData = async (userInput) => {
 
                       nodes {
                         name
-                        url
                         primaryLanguage {
                           name
                         }
@@ -64,7 +63,6 @@ export const getUserData = async (userInput) => {
         totalCount: data[i]?.object?.history?.totalCount
           ? data[i]?.object?.history?.totalCount
           : "",
-        url: data[i].url,
       });
     }
   });

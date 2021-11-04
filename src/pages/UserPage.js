@@ -53,7 +53,7 @@ export default function UserPage() {
             userAvatar={userAvatar}
             userName={loc.pathname.substring(1)}
           />
-          <Grid userData={userData} />
+          <Grid userData={userData} userName={loc.pathname.substring(1)} />
         </>
       )}
     </>
