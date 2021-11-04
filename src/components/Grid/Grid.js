@@ -33,7 +33,7 @@ export default function CardTable(props) {
     <div>
       <div className="App--grid">
         <Header size="large" textAlign="center">
-          {location}
+          {rowNames.length > 0 ? location : `No ${location} found`}
         </Header>
         <Table celled textAlign="center" sortable>
           <Table.Header>
