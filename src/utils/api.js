@@ -39,7 +39,7 @@ export const getUserRepositories = async (userInput) => {
       query: `
                 {
                   user(login: "${userInput}") {
-                    repositories(first: 100) {
+                    repositories(first: 10) {
                       totalCount
 
                       nodes {
@@ -197,7 +197,6 @@ export const getUserStarredRepos = async (userInput) => {
               {
                 user(login: "${userInput}") {
                   starredRepositories (first: 10) {
-                    totalCount
                     nodes {
                       name
                       url

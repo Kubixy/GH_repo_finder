@@ -25,15 +25,23 @@
   }
 
   &--details {
-    font-size: 2rem !important;
+    font-size: 2rem;
     margin-top: -1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__child:hover {
+      cursor: pointer;
+      color: blue;
+    }
 
     & * {
       padding: 1rem;
     }
 
     span:last-child {
-      margin-left: 0.75rem !important;
+      margin-left: 1rem;
     }
   }
 

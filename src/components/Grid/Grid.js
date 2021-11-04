@@ -24,7 +24,7 @@ export default function CardTable(props) {
     setData(userData);
     if (userData[0]) {
       let rowName = Object.keys(userData[0]);
-      rowName.pop();
+      rowName.pop(); // removes the url - always the last element
       setRowNames(rowName);
     }
   }, [userData]);
