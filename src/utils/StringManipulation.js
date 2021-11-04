@@ -4,3 +4,12 @@ export const pretifyRowName = (nameArr) => {
 
   return nameArr;
 };
+
+const swapNames = (name) => {
+  switch (name) {
+    case "totalCount":
+      return "Commits";
+    case "commitedDate":
+      return "Last commit";
+  }
+};

@@ -11,7 +11,8 @@ export default function UserInput() {
       <Input
         placeholder="Username..."
         onKeyPress={(e) => {
-          if (e.key === "Enter") window.location.href = `/${userInput}`;
+          if (e.key === "Enter" && userInput.length > 0)
+            window.location.href = `/${userInput}`;
         }}
         onChange={(e) => {
           setUserInput(e.target.value);
@@ -21,7 +22,7 @@ export default function UserInput() {
       <div
         className="App--input__search"
         onClick={() => {
-          window.location.href = `/${userInput}`;
+          if (userInput.length > 0) window.location.href = `/${userInput}`;
         }}
       >
         <p>Search</p>

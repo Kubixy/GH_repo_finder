@@ -9,10 +9,7 @@ export default function UserProfile(props) {
 
   return (
     <div className="UserProfile">
-      <div
-        className="UserProfile--avatarName"
-        onClick={() => window.open("https://github.com/" + userName)}
-      >
+      <div className="UserProfile--avatarName">
         {userAvatar ? (
           <Image src={userAvatar} avatar alt="avatar" />
         ) : (
