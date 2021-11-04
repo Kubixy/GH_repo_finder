@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Header, Loader, Dimmer, Icon } from "semantic-ui-react";
-import { githubV4Api } from "../utils/api";
+import { getUserData } from "../utils/api";
 import UserInput from "../components/UserInput/UserInput";
 import Grid from "../components/Grid/Grid";
 import { validateUsername } from "../utils/Validation";
@@ -14,11 +14,9 @@ export default function UserPage() {
   const [userAvatar, setUserAvatar] = useState(null);
   const loc = useLocation();
 
-  // REFACTOR
-
   useEffect(() => {
     if (validateUsername(loc.pathname.substring(1))) {
-      githubV4Api(loc.pathname.substring(1))
+      getUserData(loc.pathname.substring(1))
         .then((input) => {
           setUserAvatar(input.userAvatar);
           setUserData(input.userData);

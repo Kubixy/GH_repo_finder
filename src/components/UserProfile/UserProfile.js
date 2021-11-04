@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Image, Label, Icon } from "semantic-ui-react";
 import UserInput from "../UserInput/UserInput";
+import { getUserStats } from "./../../utils/api";
 
 import "./UserProfile.scss";
 
 export default function UserProfile(props) {
   const { userAvatar, userName } = props;
+  const [userStats, setUsertStats] = useState({
+    repos: null,
+    follows: null,
+    starred: null,
+  });
+
+  useMemo(() => {
+    getUserStats(userName).then((input) => {
+      setUsertStats(input);
+    });
+  }, [userName]);
 
   return (
     <div className="UserProfile">
@@ -19,11 +31,11 @@ export default function UserProfile(props) {
       </div>
       <div className="UserProfile--details">
         <Icon name="archive" />
-        <span>10</span>
+        <span>{userStats.repos}</span>
         <Icon name="star" />
-        <span>20</span>
+        <span>{userStats.starred}</span>
         <Icon name="users" />
-        <span>3</span>
+        <span>{userStats.follows}</span>
       </div>
       <UserInput />
     </div>
