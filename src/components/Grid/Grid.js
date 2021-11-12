@@ -1,6 +1,7 @@
 import { Table, Header } from "semantic-ui-react";
 import GridElement from "../GridElement";
 import { useMemo, useState, useEffect } from "react";
+import Pagination from "../Pagination/Pagination";
 
 import "./Grid.scss";
 
@@ -61,6 +62,7 @@ export default function CardTable(props) {
             })}
           </Table.Body>
         </Table>
+        <Pagination total={10} />
       </div>
     </div>
   );

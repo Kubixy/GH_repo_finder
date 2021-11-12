@@ -26,7 +26,7 @@ export const getUserAvatar = async (userInput) => {
   return output;
 };
 
-export const getUserRepositories = async (userInput) => {
+export const getUserRepositories = async (userInput, cursor) => {
   let output = [];
 
   await axios({
@@ -39,8 +39,12 @@ export const getUserRepositories = async (userInput) => {
       query: `
                 {
                   user(login: "${userInput}") {
-                    repositories(first: 10) {
+                    repositories(first: 10 ${cursor}) {
                       totalCount
+
+                      edges {
+                        cursor
+                      }
 
                       nodes {
                         name
@@ -71,7 +75,6 @@ export const getUserRepositories = async (userInput) => {
     }),
   }).then((input) => {
     let data = input.data.data.user?.repositories?.nodes;
-
     for (let i = 0; i < data.length; i++) {
       output.push({
         Name: data[i].name,
@@ -89,6 +92,8 @@ export const getUserRepositories = async (userInput) => {
         url: data[i].url,
       });
     }
+
+    let edges = input.data.data.user?.repositories?.edges;
   });
 
   return output;

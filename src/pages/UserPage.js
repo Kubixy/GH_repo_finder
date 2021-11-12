@@ -11,6 +11,7 @@ import UserInput from "../components/UserInput/UserInput";
 import Grid from "../components/Grid/Grid";
 import { validateUsername } from "../utils/Validation";
 import UserProfile from "../components/UserProfile/UserProfile";
+import { useValueProvider } from "../context/ValueProvider";
 
 export default function UserPage(props) {
   const { location } = props;
@@ -20,6 +21,7 @@ export default function UserPage(props) {
   const [userAvatar, setUserAvatar] = useState(null);
   const loc = useLocation();
   const userName = loc.pathname.substring(loc.pathname.lastIndexOf("/") + 1);
+  const { setCursor } = useValueProvider();
 
   useEffect(() => {
     if (validateUsername(userName)) {
@@ -27,8 +29,11 @@ export default function UserPage(props) {
 
       switch (location) {
         case "repositories":
-          getUserRepositories(userName)
+          // Unificar funciones y pasar queries
+          getUserRepositories(userName, "")
             .then((input) => {
+              setCursor(input[input.length - 1]);
+              delete input[input.length - 1];
               setUserData(input);
             })
             .catch(() => {
